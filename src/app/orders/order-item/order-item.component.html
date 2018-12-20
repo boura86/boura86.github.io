@@ -1,0 +1,46 @@
+<div class="border">
+    <h4 class="display-4 text-center">Order Food Item</h4>
+    <hr>
+    <form #form="ngForm" autocomplete="off" class="" (submit)="onSubmit(form)">
+        <input type="hidden" name="OrderItemID" #OrderItemID="ngModel" [(ngModel)]="orderItem.OrderItemID">
+        <input type="hidden" name="OrderID" #OrderID="ngModel" [(ngModel)]="orderItem.OrderID">
+        <input type="hidden" name="ItemName" #ItemName="ngModel" [(ngModel)]="orderItem.ItemName">
+      <div class="form-group">
+        <label>Food Item</label>
+        <select name="ItemID" #ItemID="ngModel" [(ngModel)]="orderItem.ItemID" id="" (change)="updatePrice($event.target)"
+        class="form-control" [class.is-invalid]="!isValid && orderItem.ItemID == 0">
+          <option value="0">-Select-</option>
+          <option *ngFor="let item of itemList" value="{{item.ItemID}}">{{item.Name}}</option>
+        </select>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-6">
+              <label for="">Price</label>
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">$</span>
+                  </div>
+                  <input name="Price" #Price="ngModel" readonly [(ngModel)]="orderItem.Price" class="form-control">
+                </div>
+          </div>
+          <div class="form-group col-md-6">
+              <label>Quantity</label>
+              <input name="Quantity" #Quantity="ngModel"(keyup)="updateTotal()" [(ngModel)]="orderItem.Quantity" 
+              id="" class="form-control" [class.is-invalid]="!isValid && orderItem.Quantity == 0">
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="">Total</label>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">$</span>
+              </div>
+              <input name="Total" #Total="ngModel" readonly [(ngModel)]="orderItem.Total" class="form-control">
+            </div>
+      </div>
+      <div class="form-group modal-footer">
+        <button type="submit" class="btn btn-success">Add order item</button>
+        <button type="button" class="btn btn-outline-dark ml-1" (click)="activeModal.close('Close click')">Close</button>
+      </div>
+    </form>
+</div>
